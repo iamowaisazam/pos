@@ -11,26 +11,9 @@ class Setting extends Model
     public $timestamps = false;
 
     protected $table = 'settings';
+    protected $guarded = [];
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'name',
-        'value',
-        'section_sorting',
-        'section',
-        'type',
-        'sort',
-        'grouping',
-    ];
-
-    public function image()
-    {
-        return $this->belongsTo(Filemanager::class, 'value');
-    }
+  
 
 
     

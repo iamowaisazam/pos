@@ -1,78 +1,108 @@
 <?php
 
-use App\Http\Controllers\Admin\AuthController;
-use App\Http\Controllers\Admin\CompanyController;
-use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Business\ReportController;
+use App\Http\Controllers\Business\AuthController;
+use App\Http\Controllers\Business\CategoryController;
+use App\Http\Controllers\Business\CustomerController;
+use App\Http\Controllers\Business\CustomerLedgerController;
+use App\Http\Controllers\Business\CustomerTransactionController;
 use Illuminate\Support\Facades\Route;
-use App\Models\User;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\RoleController;
-use App\Http\Controllers\Admin\SettingController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Business\DashboardController;
+use App\Http\Controllers\Business\SaleInvoiceController;
+use App\Http\Controllers\Business\ProductController;
+use App\Http\Controllers\Business\PurchaseInvoiceController;
+use App\Http\Controllers\Business\SalePaymentController;
+use App\Http\Controllers\Business\SettingController;
+use App\Http\Controllers\Business\StockAdjustmentController;
+use App\Http\Controllers\Business\UnitController;
+use App\Http\Controllers\Business\UserController;
+use App\Http\Controllers\Business\VendorController;
+use App\Http\Controllers\Business\VendorTransactionController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
 */
 
-Route::get('/',function(){
-    
-    return redirect('/admin/login'); 
+Route::get('/',function(){    
+    return redirect('/business/login'); 
 });
+
 
 //Admin
 Route::get('/', [AuthController::class, 'login']);
-Route::get('/admin/login', [AuthController::class, 'login'])->name('login');
-Route::post('/admin/login_submit', [AuthController::class, 'login_submit']);
+
+Route::get('login', [AuthController::class, 'login'])->name('login');
+Route::post('login_submit', [AuthController::class, 'login_submit']);
+
+Route::get('register', [AuthController::class, 'register']);
+Route::post('register_submit', [AuthController::class, 'register_submit']);
+
 
 Route::middleware(['auth'])->group(function () {
 
-  Route::get('/admin/logout', [AuthController::class, 'logout']);
-//   Route::get('/admin/changepassword', [DashboardController::class, 'changepassword']);
-//   Route::post('/admin/changepassword_submit', [DashboardController::class, 'changepassword_submit']);
+        Route::get('/business/logout', [AuthController::class, 'logout']);
+        Route::get('/business/changepassword', [DashboardController::class, 'changepassword']);
+        Route::post('/business/changepassword_submit', [DashboardController::class, 'changepassword_submit']);
 
-  Route::get('/admin/dashboard', [DashboardController::class, 'dashboard']);
-  Route::get('/admin/dashboard/products', [DashboardController::class, 'products']);
-  Route::post('/admin/status', [DashboardController::class, 'status']);
+        Route::get('/business/dashboard', [DashboardController::class, 'dashboard']);
+        Route::get('/business/dashboard/products', [DashboardController::class, 'products']);
+        Route::post('/business/status', [DashboardController::class, 'status']);
+        
+        //Profile
+        Route::get('business/profile',[DashboardController::class, 'profile']);
+        Route::post('business/profile-update',[DashboardController::class, 'profile_update']);
 
 
-      //Users
-      Route::get('/admin/users/index',[UserController::class, 'index']);
-      Route::get('/admin/users/create',[UserController::class, 'create']);
-      Route::post('/admin/users/store',[UserController::class, 'store']);
-      Route::get('/admin/users/edit/{id}',[UserController::class, 'edit']);
-      Route::post('/admin/users/update/{id}',[UserController::class, 'update']);
-      Route::get('/admin/users/delete/{id}',[UserController::class, 'delete']);
-      Route::get('admin/profile',[UserController::class, 'profile']);
-      Route::post('admin/profile-update',[UserController::class, 'profile_update']);
 
-      //Roles
-      Route::get('/admin/roles/index', [RoleController::class, 'index']);
-      Route::get('/admin/roles/create', [RoleController::class, 'create']);
-      Route::post('/admin/roles/store', [RoleController::class, 'store']);
-      Route::get('/admin/roles/edit/{id}', [RoleController::class, 'edit']);
-      Route::post('/admin/roles/update/{id}', [RoleController::class, 'update']);
-      Route::get('/admin/roles/delete/{id}', [RoleController::class, 'delete']);
+        // Inventory Managment
+        Route::resource('/business/products',ProductController::class);
+        Route::resource('/business/stockadjustment',StockAdjustmentController::class);
+        Route::resource('/business/categories',CategoryController::class);
+        Route::resource('/business/units',UnitController::class);
 
-      //Modules
-      Route::resource('/admin/orders',OrderController::class);
-      Route::resource('/admin/customers',CustomerController::class);
-      Route::resource('/admin/products',ProductController::class);
-    
-      Route::get('/admin/companies/logged/{id}', [CompanyController::class, 'logged']);
-      Route::resource('/admin/companies',CompanyController::class);
+        // Purchase Management
+        Route::get('/business/purchaseinvoices/print/{id}', [PurchaseInvoiceController::class, 'print']);
+        Route::resource('/business/purchaseinvoices',PurchaseInvoiceController::class);
 
-      //Settings
-      Route::match(['get', 'post'], 'admin/settings/general', [SettingController::class, 'general']);
-      Route::match(['get', 'post'], 'admin/settings/address', [SettingController::class, 'address']);
+        // Sales Management
+        Route::get('/business/saleinvoices/print/{id}', [SaleInvoiceController::class, 'print']);
+        Route::resource('/business/saleinvoices',SaleInvoiceController::class);
+        Route::resource('/business/salepayments',SalePaymentController::class);
+
+
+        // Vendor Management
+        Route::resource('/business/vendor-transactions',VendorTransactionController::class);
+        Route::resource('/business/vendors',VendorController::class);
+       
+
+        //Customer Managment
+        Route::resource('/business/customer-transactions',CustomerTransactionController::class);
+        Route::resource('/business/customers',CustomerController::class);
+
+        //Reports
+        Route::get('/business/reports/customerLedger',[ReportController::class,'customerLedger']);
+        Route::get('/business/reports/customerLedgerDetail/{id}',[ReportController::class,'customerLedgerDetail']);
+        Route::get('/business/reports/vendorLedger',[ReportController::class,'vendorLedger']);
+        Route::get('/business/reports/vendorLedgerDetail/{id}',[ReportController::class,'vendorLedgerDetail']);
+        
+        Route::get('/business/reports/saleReport',[ReportController::class,'saleReport']);
+        Route::get('/business/reports/purchaseReport',[ReportController::class,'purchaseReport']);
+        
+        Route::get('/business/reports/inventoryReport',[ReportController::class,'inventoryReport']);
+        Route::get('/business/reports/inventoryReportDetail/{id}',[ReportController::class,'inventoryReportDetail']);
+
+
+        
+
+        //Settings
+        Route::match(['get', 'post'], 'business/settings/general', [SettingController::class, 'general']);
+        Route::match(['get', 'post'], 'business/settings/address', [SettingController::class, 'address']);
 
 });
 

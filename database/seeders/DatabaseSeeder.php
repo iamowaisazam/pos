@@ -27,45 +27,8 @@ class DatabaseSeeder extends Seeder
         
         
         $faker = Faker::create();
-
-        Role::select('*')->delete();
-        User::select('*')->delete();
-    
-
-
-        Role::create([
-            'id' => 1,
-            'name' => 'Admin',
-        ]);
-
-        Role::create([
-            'id' => 2,
-            'name' => 'User',
-        ]);
-
-
-        // $permissions = EnumsPermission::DATA;
-
-        // foreach ($permissions as $key => $permission) {
-
-        //     foreach ($permission as $name) {
-        //         Permission::create([
-        //             'name' => ucfirst(str_replace('-',' ',$name)),
-        //             'slug' => $key.'.'.$name,
-        //             'grouping' => ucfirst(str_replace('-',' ',$key)),
-        //             'status' => 1,
-        //         ]);
-        //     }
-          
-        // }
-
-        // $perm = Permission::pluck('slug')->toArray();
-        // foreach (Role::all() as $key => $role) {
-        //     $role->permissions = implode(',',$perm);
-        //     $role->save();
-        // }
-
         
+        User::select('*')->delete();     
         User::create([
             'name' => 'Admin',
             'company_id' => null,

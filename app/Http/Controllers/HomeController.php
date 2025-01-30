@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\newsletter;
@@ -26,18 +25,14 @@ use Illuminate\Support\Facades\App;
 class HomeController extends Controller
 {
 
-    /**
+    /*
      * Create a new controller instance.
-     *
      * @return void
      */
     public function __construct()
     {
         // $this->middleware('auth');
     }
-
  
-
-
-      
+    
 }
