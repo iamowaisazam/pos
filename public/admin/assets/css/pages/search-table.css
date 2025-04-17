@@ -1,0 +1,116 @@
+table td{
+    /* border: 1px solid lightgray; */
+}
+
+table th{
+    /* border: 1px solid lightgray; */
+}
+
+@media (max-width: 767px){
+    .container-fluid, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
+       
+        overflow: scroll!important;
+    }
+}
+
+
+.dataTables_filter{
+    display: none!important;
+}
+
+.container {
+width: 100%;
+margin: 2px auto;
+background-color: #fff;
+padding: 20px;
+border-radius: 8px;
+box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h2 {
+text-align: center;
+margin-bottom: 20px;
+}
+
+form {
+max-width: 100%;
+}
+
+.row {
+display: flex;
+margin-bottom: 20px;
+}
+
+.col {
+flex: 1;
+margin-right: 10px;
+}
+
+.col:last-child {
+margin-right: 0;
+}
+
+label {
+display: block;
+margin-bottom: 5px;
+color: #555;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="tel"],
+input[type="date"],
+input[type="number"],
+select {
+width: 100%;
+padding: 10px;
+margin-bottom: 15px;
+border: 1px solid #ccc;
+border-radius: 5px;
+transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="tel"]:focus,
+input[type="date"]:focus,
+input[type="number"]:focus,
+select:focus {
+border-color: #4CAF50;
+}
+
+.sidebar {
+flex-direction: column;
+align-items: center;
+}
+
+.sidebar button {
+width: 14%;
+padding: 10px;
+margin-bottom: 10px;
+border: none;
+border-radius: 5px;
+background-color: deepskyblue;
+color: white;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.sidebar button:hover {
+background-color: #3ca9d4;
+}
+button.btn_pdf {
+background-color: red;
+}
+
+button.btn_pdf:hover {
+background-color: darkred; 
+}
+
+button.btn_exe {
+background-color: green;
+}
+
+button.btn_exe:hover {
+background-color: darkgreen; 
+}
